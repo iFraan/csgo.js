@@ -1,0 +1,35 @@
+{
+  "name": "csgo.js",
+  "version": "1.1.0",
+  "description": "Wrapper for CSGO stats using the Official Steam API.",
+  "main": "index.js",
+  "scripts": {
+    "test": "test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iFraan/m4a1.js.git"
+  },
+  "keywords": [
+    "csgo-api",
+    "csgo",
+    "cs",
+    "stats",
+    "m4a1.js",
+    "api",
+    "valve",
+    "steam",
+    "m4a1",
+    "ak47",
+    "wrapper"
+  ],
+  "author": "ifraan_",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/iFraan/m4a1.js/issues"
+  },
+  "homepage": "https://github.com/iFraan/m4a1.js#readme",
+  "dependencies": {
+    "axios": "^0.27.2"
+  }
+}
