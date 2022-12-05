@@ -8,27 +8,28 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/iFraan/m4a1.js.git"
+    "url": "git+https://github.com/iFraan/csgo.js.git"
   },
   "keywords": [
     "csgo-api",
     "csgo",
     "cs",
     "stats",
-    "m4a1.js",
+    "csgo.js",
     "api",
     "valve",
     "steam",
     "m4a1",
     "ak47",
-    "wrapper"
+    "wrapper",
+    "m4a1.js"
   ],
   "author": "ifraan_",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/iFraan/m4a1.js/issues"
+    "url": "https://github.com/iFraan/csgo.js/issues"
   },
-  "homepage": "https://github.com/iFraan/m4a1.js#readme",
+  "homepage": "https://github.com/iFraan/csgo.js#readme",
   "dependencies": {
     "axios": "^0.27.2"
   }
