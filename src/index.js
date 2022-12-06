@@ -70,27 +70,34 @@ class CSAPI {
     }
 
     /**
-     * Get maps info
+     * Get maps stats
      * @returns maps
      */
     maps() {
-        const maps = this.data.filter(x => x.category === 'Maps').sort((a, b) => a.value < b.value);
+        const maps = this.data.filter(x => x.category === 'Maps');
+        const wins = maps.filter(x => x.key.endsWith('_wins')).map(x => ({ ...x, key: x.key.replace('_wins', '') }));
+        const played = maps.filter(x => x.key.endsWith('_played')).map(x => ({ ...x, key: x.key.replace('_played', '') }));
         const data = {};
-        for (const map of maps) {
-            data[map.key] = map.value;
+        /* just won maps should exist in both won and played rounds  */
+        for (const win of wins) {
+            data[win.key] = {
+                wins: win.value,
+                played: played[win.key].value,
+                wr: (win.value / played[win.key].value).toFixed(4)
+            };
         }
         return data;
     }
 
     /**
-     * Get maps info
-     * @returns maps
+     * Get generic stats
+     * @returns stats
      */
     stats() {
-        const maps = this.data.filter(x => x.category === 'Stats');
+        const stats = this.data.filter(x => x.category === 'Stats');
         const data = {};
-        for (const map of maps) {
-            data[map.key] = map.value;
+        for (const stat of stats) {
+            data[stat.key] = stat.value;
         }
         return data;
     }
