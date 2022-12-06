@@ -3,7 +3,6 @@
 const prettyTime = (seconds) => {
     const h = Math.floor(seconds / 3600);
     const m = Math.floor((seconds % 3600) / 60);
-    const s = Math.round(seconds % 60);
     return `${h}h ${m}m`
 }
 
@@ -63,13 +62,13 @@ module.exports = {
     total_kills_knife: {
         name: 'Knife Kills',
         key: 'knife_kills',
-        category: 'Weapons',
+        category: 'Stats',
         transform: (value) => value,
     },
     total_kills_hegrenade: {
         name: 'HE Grenade Kills',
         key: 'hegrenade_kills',
-        category: 'Weapons',
+        category: 'Stats',
         transform: (value) => value,
     },
     total_kills_glock: {
