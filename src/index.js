@@ -102,6 +102,28 @@ class CSAPI {
         return data;
     }
 
+    /**
+     * Get weapons stats
+     * @returns maps
+     */
+    weapons() {
+        const weapons = this.data.filter(x => x.category === 'Weapons');
+        const kills = weapons.filter(x => x.key.endsWith('_kills')).map(x => ({ ...x, key: x.key.replace('_kills', '') }));
+        const shots = weapons.filter(x => x.key.endsWith('_shots')).map(x => ({ ...x, key: x.key.replace('_shots', '') }));
+        const hits = weapons.filter(x => x.key.endsWith('_hits')).map(x => ({ ...x, key: x.key.replace('_hits', '') }));
+        const data = {};
+        /* a hit implies a shot */
+        for (const hit of hits) {
+            data[hit.key] = {
+                hits: hit.value,
+                shots: shots[hit.key].value,
+                kills: kills[hit.key]?.value || 0,
+                accuracy: (hit.value / shots[hit.key].value).toFixed(4)
+            };
+        }
+        return data;
+    }
+
     get raw() { return this._raw; }
 
 }
