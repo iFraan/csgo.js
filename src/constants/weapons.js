@@ -15,7 +15,7 @@ const WEAPONS = {
     'm249': 'M249',
     'mac10': 'MAC-10',
     'mag7': 'MAG-7',
-    'mp7': 'MP5/MP7',
+    'mp7': 'MP5 / MP7',
     'mp9': 'MP9',
     'negev': 'Negev',
     'nova': 'Nova',

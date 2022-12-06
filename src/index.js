@@ -51,7 +51,7 @@ class CSAPI {
             if (!API._raw.player?.success) throw new Error(API._raw.player?.message || `Couldn't find a steam user/id with ${username}`)
             API._raw.stats = await fetch(URLS.stats.replace('{STEAMID}', API._raw.player.data.player.id).replace('{APIKEY}', API.steamKey))
             /* parse data */
-            API.data = parseItems(API._raw.stats)
+            API.data = parseItems(API._raw.stats);
         } catch (e) {
             console.log(e)
             if (e?.code == 'steam.invalid_id') throw new Error('Invalid steam username/id.');
@@ -67,6 +67,32 @@ class CSAPI {
     info() {
         const user = this._raw.player?.data?.player?.meta || {};
         return user;
+    }
+
+    /**
+     * Get maps info
+     * @returns maps
+     */
+    maps() {
+        const maps = this.data.filter(x => x.category === 'Maps').sort((a, b) => a.value < b.value);
+        const data = {};
+        for (const map of maps) {
+            data[map.key] = map.value;
+        }
+        return data;
+    }
+
+    /**
+     * Get maps info
+     * @returns maps
+     */
+    stats() {
+        const maps = this.data.filter(x => x.category === 'Stats');
+        const data = {};
+        for (const map of maps) {
+            data[map.key] = map.value;
+        }
+        return data;
     }
 
     get raw() { return this._raw; }
