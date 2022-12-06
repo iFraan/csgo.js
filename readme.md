@@ -38,7 +38,6 @@ npm i csgo.js
 ### Example usage
 > For more example usages go into the `docs` folder or click the links in the table above
 
-> 
 ```js
 const { API } = require('csgo.js');
 const { STEAM_TOKEN } = require('./keys.json');
