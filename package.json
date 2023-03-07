@@ -1,6 +1,6 @@
 {
   "name": "csgo.js",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "CSGO stats using the Official Steam API.",
   "main": "index.js",
   "scripts": {

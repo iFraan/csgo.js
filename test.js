@@ -15,6 +15,8 @@ m = (async () => {
         console.log('Weapons: ', weapons);
         const lastMatch = user.lastMatch()
         console.log('lastMatch: ', lastMatch);
+        const unknown = user.unknown()
+        console.log('unknown: ', unknown);
         // const raw = user.raw;
         // console.log('raw: ', raw);
     } catch (e) {

@@ -25,14 +25,15 @@ npm i csgo.js
 ### Available Methods for user
 > You must call **API.fetchUser** before using any other method.
 
-| Method | Description | More info | 
-| - | - | - |
-| info() | User related info | [info.md](docs/info.md)
-| stats() | General Stats | [stats.md](docs/stats.md)
-| maps() | Map related Stats | [maps.md](docs/maps.md)
-| weapons() | Weapons Stats | [weapons.md](docs/weapons.md)
-| lastMatch() | lastMatch Stats | [lastMatch.md](docs/lastMatch.md)
-| raw | raw data collected so far | [raw.md](docs/raw.md)
+| Method      | Description               | More info                         |
+| ----------- | ------------------------- | --------------------------------- |
+| info()      | User related Info         | [info.md](docs/info.md)           |
+| stats()     | General Stats             | [stats.md](docs/stats.md)         |
+| maps()      | Map related Stats         | [maps.md](docs/maps.md)           |
+| weapons()   | Weapons Stats             | [weapons.md](docs/weapons.md)     |
+| lastMatch() | lastMatch Stats           | [lastMatch.md](docs/lastMatch.md) |
+| unknown()   | Unknown Stats             | [unknown.md](docs/unknown.md)     |
+| raw         | raw data collected so far | [raw.md](docs/raw.md)             |
 
 
 ### Example usage
