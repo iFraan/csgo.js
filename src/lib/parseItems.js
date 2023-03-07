@@ -12,7 +12,14 @@ const parseItems = (rawdata) => {
                 value: transform(item.value)
             }
         }
-        else return false;
+        else {
+            return {
+                key: item.name,
+                name: item.name,
+                category: 'Unknown',
+                value: item.value
+            }
+        }
     }).filter(Boolean);
 }
 

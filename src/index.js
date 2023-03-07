@@ -12,10 +12,9 @@ const fetch = (url) => new Promise((resolve, reject) => {
 
     axios.get(url).then(res => {
         resolve(res.data)
+    }).catch(err => {
+        reject(err.response.data)
     })
-        .catch(err => {
-            reject(err.response.data)
-        })
 
 })
 
@@ -74,6 +73,19 @@ class CSAPI {
      */
     stats() {
         const stats = this.data.filter(x => x.category === 'Stats');
+        const data = {};
+        for (const stat of stats) {
+            data[stat.key] = stat.value;
+        }
+        return data;
+    }
+
+    /**
+     * Get unkonwn stats
+     * @returns stats
+     */
+    unknown() {
+        const stats = this.data.filter(x => x.category === 'Unknown');
         const data = {};
         for (const stat of stats) {
             data[stat.key] = stat.value;
