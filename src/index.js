@@ -1,9 +1,12 @@
 const axios = require('axios');
 const { parseItems } = require('./lib/parseItems');
 
+const STEAM64_REGEX = /^\d{17}$/
+
 const URLS = {
     stats: 'http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=730&key={APIKEY}&steamid={STEAMID}',
-    player: 'https://playerdb.co/api/player/steam/{PLAYER}'
+    player: 'https://playerdb.co/api/player/steam/{PLAYER}',
+    steam64: 'https://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key={APIKEY}&vanityurl={PLAYER}',
 }
 
 const key = (arr, name) => arr[arr.indexOf(arr.find(x => x.metadata.key == name))].value;
@@ -18,6 +21,24 @@ const fetch = (url) => new Promise((resolve, reject) => {
 
 })
 
+const getPlayerSteam64 = async (apiKey, username) => {
+
+    /* if it is already an possible valid id */
+    if (STEAM64_REGEX.test(username)) return username;
+
+    try {
+        const { response: player } = await fetch(URLS.steam64.replace('{PLAYER}', username).replace('{APIKEY}', apiKey))
+        if (player?.success === 1) {
+            return player.steamid;
+        }
+        /* force an error if no match is found */
+        throw new Error(player?.message || `Couldn't find a steam user/id with ${username}`)
+    } catch (e) {
+        throw new Error(e)
+    }
+
+    return undefined; /* you never know */
+}
 
 class CSAPI {
 
@@ -45,8 +66,10 @@ class CSAPI {
         if (typeof username == 'undefined') throw new Error('You have to provide an username.');
         if (typeof apiKey == 'undefined') throw new Error('You have to provide a Steam API key. You can get one here: https://steamcommunity.com/dev/apikey');
         try {
+            /* test username for id */
+            const steam64 = await getPlayerSteam64(API.steamKey, username);
             /* fetch data */
-            API._raw.player = await fetch(URLS.player.replace('{PLAYER}', username))
+            API._raw.player = await fetch(URLS.player.replace('{PLAYER}', steam64))
             if (!API._raw.player?.success) throw new Error(API._raw.player?.message || `Couldn't find a steam user/id with ${username}`)
             API._raw.stats = await fetch(URLS.stats.replace('{STEAMID}', API._raw.player.data.player.id).replace('{APIKEY}', API.steamKey))
             /* parse data */
