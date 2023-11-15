@@ -4,7 +4,9 @@
   "description": "CSGO stats using the Official Steam API.",
   "main": "index.js",
   "scripts": {
-    "test": "test.js"
+    "test": "node dist/test.js",
+    "build": "tsc",
+    "start": "node dist/index.js"
   },
   "repository": {
     "type": "git",
@@ -32,5 +34,8 @@
   "homepage": "https://github.com/iFraan/csgo.js#readme",
   "dependencies": {
     "axios": "^0.27.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2"
   }
 }
