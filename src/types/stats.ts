@@ -123,3 +123,12 @@ export type LastMatchStats = {
     last_match_contribution_score: number,
     last_match_rounds: number,
 }
+
+export type ParsedItem = {
+    key: string;
+    name: string;
+    category: string;
+    value: unknown;
+};
+
+export type ParsedData = ParsedItem[];

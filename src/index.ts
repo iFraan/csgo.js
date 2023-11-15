@@ -6,7 +6,7 @@ import MAPS from './constants/maps';
 /* types */
 import { PlayerDBResponse, PlayerInfo } from './types/player';
 import { SteamResponse } from './types/steam';
-import { GeneralStats, LastMatchStats, MapStats, UnknownStats, WeaponsStats } from './types/stats';
+import { GeneralStats, LastMatchStats, MapStats, ParsedData, UnknownStats, WeaponsStats } from './types/stats';
 
 const STEAM64_REGEX = /^\d{17}$/;
 
@@ -51,8 +51,8 @@ class CSAPI {
 
     username: string;
     steamKey: string;
-    _raw: any;
-    data: any;
+    _raw: unknown | any;
+    data: ParsedData;
     player: PlayerDBResponse | undefined;
     steam: SteamResponse | undefined;
 
@@ -66,7 +66,7 @@ class CSAPI {
         this.username = username;
         this.steamKey = apiKey;
         this._raw = {};
-        this.data = {};
+        this.data = [] as ParsedData;
     }
 
     /**
@@ -89,7 +89,7 @@ class CSAPI {
             API._raw.stats = API.steam;
             API._raw.player = API.player;
             /* parse data */
-            API.data = parseItems(API.steam);
+            API.data = parseItems(API.steam) as ParsedData;
         } catch (e) {
             console.log(e)
             if (e?.code == 'steam.invalid_id') throw new Error('Invalid steam username/id.');
@@ -102,7 +102,7 @@ class CSAPI {
      * @returns PlayerInfo
      */
     info() {
-        const user = this._raw.player?.data?.player?.meta || {};
+        const user = this.player?.data?.player?.meta || {};
         return user as PlayerInfo;
     }
 
@@ -143,8 +143,8 @@ class CSAPI {
         const data = {};
         /* just won maps should exist in both won and played rounds  */
         for (const win of wins) {
-            const _wins = win.value;
-            const _played = played.find(x => x.key == win.key)?.value || 0;
+            const _wins = win.value as number;
+            const _played = played.find(x => x.key == win.key)?.value as number || 0;
             data[win.key] = {
                 wins: _wins,
                 played: _played,
@@ -166,9 +166,9 @@ class CSAPI {
         const data = {};
         /* a hit implies a shot */
         for (const hit of hits) {
-            const _hits = hit.value;
-            const _shots = shots.find(x => x.key == hit.key)?.value || 0;
-            const _kills = kills.find(x => x.key == hit.key)?.value || 0;
+            const _hits = hit.value as number;
+            const _shots = shots.find(x => x.key == hit.key)?.value as number || 0;
+            const _kills = kills.find(x => x.key == hit.key)?.value as number || 0;
             data[hit.key] = {
                 hits: _hits,
                 shots: _shots,
@@ -193,7 +193,7 @@ class CSAPI {
         return data as LastMatchStats;
     }
 
-    get raw(): any { return { ...this._raw, data: this.data } }
+    get raw(): unknown { return { ...this._raw, data: this.data } }
 
 }
 

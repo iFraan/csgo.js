@@ -1,4 +1,5 @@
 import { SteamResponse } from '../types/steam';
+import { ParsedData, ParsedItem } from '../types/stats';
 import { dictionary } from './dictionary';
 
 export const parseItems = (rawdata: SteamResponse | undefined) => {
@@ -13,7 +14,7 @@ export const parseItems = (rawdata: SteamResponse | undefined) => {
                 name,
                 category,
                 value: transform(item.value)
-            }
+            } as ParsedItem;
         }
         else {
             return {
@@ -21,9 +22,9 @@ export const parseItems = (rawdata: SteamResponse | undefined) => {
                 name: item.name,
                 category: 'Unknown',
                 value: item.value
-            }
+            } as ParsedItem;
         }
-    }).filter(Boolean);
+    }).filter(Boolean) as ParsedData;
 }
 
 export default {

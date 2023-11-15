@@ -8,5 +8,5 @@ export type SteamResponse = {
 
 type SteamStat = {
     name: string;
-    value: any;
+    value: number;
 }
