@@ -1,7 +1,7 @@
-const { API } = require('./index');
-const { STEAM_KEY } = require('./keys.json')
+import { API } from './index';
+const STEAM_KEY = '';
 
-m = (async () => {
+const test = async () => {
 
     try {
         const user = await API.fetchUser('iFraan_', STEAM_KEY);
@@ -23,6 +23,6 @@ m = (async () => {
         console.log(e)
     }
 
-})
+};
 
-m()
+test();

@@ -20,4 +20,4 @@ const MAPS = {
     de_overpass: 'Overpass',
     de_subzero: 'Subzero',
 }
-module.exports = MAPS;
+export default MAPS;

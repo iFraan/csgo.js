@@ -31,4 +31,4 @@ const WEAPONS = {
     'xm1014': 'XM1014',
 }
 
-module.exports = WEAPONS;
+export default WEAPONS;

@@ -1,12 +1,11 @@
 /* name the stats (ant-like work) */
-
-const prettyTime = (seconds) => {
+const prettyTime = (seconds: number) => {
     const h = Math.floor(seconds / 3600);
     const m = Math.floor((seconds % 3600) / 60);
-    return `${h}h ${m}m`
+    return `${h}h ${m}m` as string;
 }
 
-module.exports = {
+export const dictionary = {
     total_kills: {
         name: 'Kills',
         key: 'kills',
@@ -1127,4 +1126,6 @@ module.exports = {
         category: 'Maps_matches',
         transform: (value) => value,
     },
-}
+};
+
+export default dictionary;

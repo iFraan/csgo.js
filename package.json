@@ -1,10 +1,17 @@
 {
   "name": "csgo.js",
-  "version": "1.2.0",
+  "version": "1.5.3",
   "description": "CSGO stats using the Official Steam API.",
-  "main": "index.js",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "test": "test.js"
+    "test": "ts-node test.ts",
+    "build": "tsup",
+    "start": "node dist/index.js"
   },
   "repository": {
     "type": "git",
@@ -22,7 +29,9 @@
     "m4a1",
     "ak47",
     "wrapper",
-    "m4a1.js"
+    "m4a1.js",
+    "cs2",
+    "counterstrike2"
   ],
   "author": "ifraan_",
   "license": "GPL-3.0",
@@ -32,5 +41,10 @@
   "homepage": "https://github.com/iFraan/csgo.js#readme",
   "dependencies": {
     "axios": "^0.27.2"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.1",
+    "tsup": "^7.2.0",
+    "typescript": "^5.2.2"
   }
 }
