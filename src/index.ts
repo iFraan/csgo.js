@@ -2,6 +2,7 @@ import axios from 'axios';
 import { parseItems } from './lib/parseItems';
 /* types */
 import { PlayerDBResponse, PlayerInfo } from './types/player';
+import { SteamResponse } from './types/steam';
 
 const STEAM64_REGEX = /^\d{17}$/;
 
@@ -49,6 +50,7 @@ class CSAPI {
     _raw: any;
     data: any;
     player: PlayerDBResponse | undefined;
+    steam: SteamResponse | undefined;
 
     /**
      * Use API.fetchUser instead.
@@ -71,18 +73,19 @@ class CSAPI {
      */
     static async fetchUser(username: string, apiKey: string) {
         const API = new CSAPI(username, apiKey);
-        if (typeof username == 'undefined') throw new Error('You have to provide an username.');
-        if (typeof apiKey == 'undefined') throw new Error('You have to provide a Steam API key. You can get one here: https://steamcommunity.com/dev/apikey');
+        if (typeof username === 'undefined') throw new Error('You have to provide an username.');
+        if (typeof apiKey === 'undefined') throw new Error('You have to provide a Steam API key. You can get one here: https://steamcommunity.com/dev/apikey');
         try {
             /* test username for id */
             const steam64: string = await getPlayerSteam64(API.steamKey, username);
             /* fetch data */
             API.player = await fetch(URLS.player.replace('{PLAYER}', steam64)) as PlayerDBResponse;
             if (!API.player?.success) throw new Error(API.player?.message || `Couldn't find a steam user/id with ${username}`)
-            API._raw.stats = await fetch(URLS.stats.replace('{STEAMID}', API._raw.player.data.player.id).replace('{APIKEY}', API.steamKey))
+            API.steam = await fetch(URLS.stats.replace('{STEAMID}', API.player.data.player.id).replace('{APIKEY}', API.steamKey)) as SteamResponse;
+            API._raw.stats = API.steam;
             API._raw.player = API.player;
             /* parse data */
-            API.data = parseItems(API._raw.stats);
+            API.data = parseItems(API.steam);
         } catch (e) {
             console.log(e)
             if (e?.code == 'steam.invalid_id') throw new Error('Invalid steam username/id.');
@@ -96,7 +99,7 @@ class CSAPI {
      */
     info() {
         const user = this._raw.player?.data?.player?.meta || {};
-        return user;
+        return user as PlayerDBResponse;
     }
 
     /**
