@@ -102,7 +102,7 @@ export type WeaponsStats = {
     galilar: WeaponStat,
 };
 
-export type UnknownStats = any;
+export type UnknownStats = unknown;
 
 export type LastMatchStats = {
     last_match_t_wins: number,

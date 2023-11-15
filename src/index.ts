@@ -5,8 +5,8 @@ import WEAPONS from './constants/weapons';
 import MAPS from './constants/maps';
 /* types */
 import { PlayerDBResponse, PlayerInfo } from './types/player';
-import { SteamResponse } from './types/steam';
-import { GeneralStats, LastMatchStats, MapStats, ParsedData, UnknownStats, WeaponsStats } from './types/stats';
+import { Steam64Response, SteamResponse } from './types/steam';
+import { GeneralStats, LastMatchStats, MapStats, ParsedData, ParsedItem, UnknownStats, WeaponsStats } from './types/stats';
 
 const STEAM64_REGEX = /^\d{17}$/;
 
@@ -15,8 +15,6 @@ const URLS = {
     player: 'https://playerdb.co/api/player/steam/{PLAYER}',
     steam64: 'https://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key={APIKEY}&vanityurl={PLAYER}',
 } as const;
-
-const key = (arr: any[], name: string) => arr[arr.indexOf(arr.find(x => x.metadata.key == name))].value;
 
 const fetch = (url: string) => new Promise((resolve, reject) => {
 
@@ -34,7 +32,7 @@ const getPlayerSteam64 = async (apiKey: string, username: string) => {
     if (STEAM64_REGEX.test(username)) return username;
 
     try {
-        const { response: player }: any = await fetch(URLS.steam64.replace('{PLAYER}', username).replace('{APIKEY}', apiKey))
+        const { response: player }: Steam64Response = await fetch(URLS.steam64.replace('{PLAYER}', username).replace('{APIKEY}', apiKey)) as Steam64Response;
         if (player?.success === 1) {
             return player.steamid as string;
         }
@@ -51,7 +49,7 @@ class CSAPI {
 
     username: string;
     steamKey: string;
-    _raw: unknown | any;
+    _raw: {};
     data: ParsedData;
     player: PlayerDBResponse | undefined;
     steam: SteamResponse | undefined;
