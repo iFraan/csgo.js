@@ -1,5 +1,8 @@
 import axios from 'axios';
 import { parseItems } from './lib/parseItems';
+/* constants */
+import WEAPONS from './constants/weapons';
+import MAPS from './constants/maps';
 /* types */
 import { PlayerDBResponse, PlayerInfo } from './types/player';
 import { SteamResponse } from './types/steam';
@@ -194,4 +197,9 @@ class CSAPI {
 
 }
 
-export default CSAPI
+export default CSAPI;
+export {
+    CSAPI as API,
+    WEAPONS,
+    MAPS,
+}
