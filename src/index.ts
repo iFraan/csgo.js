@@ -49,7 +49,10 @@ class CSAPI {
 
     username: string;
     steamKey: string;
-    _raw: {};
+    _raw: {
+        player: PlayerDBResponse,
+        stats: SteamResponse,
+    } | {};
     data: ParsedData;
     player: PlayerDBResponse | undefined;
     steam: SteamResponse | undefined;
