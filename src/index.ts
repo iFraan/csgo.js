@@ -3,7 +3,7 @@ import { parseItems } from './lib/parseItems';
 /* types */
 import { PlayerDBResponse, PlayerInfo } from './types/player';
 import { SteamResponse } from './types/steam';
-import { GeneralStats, LastMatch, MapStats, UnknownStats, WeaponsStats } from './types/stats';
+import { GeneralStats, LastMatchStats, MapStats, UnknownStats, WeaponsStats } from './types/stats';
 
 const STEAM64_REGEX = /^\d{17}$/;
 
@@ -96,7 +96,7 @@ class CSAPI {
     }
     /**
      * Get userinfo
-     * @returns userinfo
+     * @returns PlayerInfo
      */
     info() {
         const user = this._raw.player?.data?.player?.meta || {};
@@ -104,10 +104,10 @@ class CSAPI {
     }
 
     /**
-     * Get generic stats
-     * @returns stats
+     * Get general stats
+     * @returns GeneralStats
      */
-    stats() {
+    stats(): GeneralStats {
         const stats = this.data.filter(x => x.category === 'Stats');
         const data = {};
         for (const stat of stats) {
@@ -118,7 +118,7 @@ class CSAPI {
 
     /**
      * Get unkonwn stats
-     * @returns stats
+     * @returns UnknownStats
      */
     unknown() {
         const stats = this.data.filter(x => x.category === 'Unknown');
@@ -131,7 +131,7 @@ class CSAPI {
 
     /**
      * Get maps stats
-     * @returns maps
+     * @returns MapStats
      */
     maps() {
         const maps = this.data.filter(x => x.category === 'Maps');
@@ -153,7 +153,7 @@ class CSAPI {
 
     /**
      * Get weapons stats
-     * @returns maps
+     * @returns WeaponsStats
      */
     weapons() {
         const weapons = this.data.filter(x => x.category === 'Weapons');
@@ -179,7 +179,7 @@ class CSAPI {
 
     /**
      * Get last match stats
-     * @returns stats
+     * @returns LastMatchStats
      */
     lastMatch() {
         const stats = this.data.filter(x => x.category === 'LastMatch');
@@ -190,7 +190,7 @@ class CSAPI {
         return data as LastMatchStats;
     }
 
-    get raw() { return { ...this._raw, data: this.data } }
+    get raw(): any { return { ...this._raw, data: this.data } }
 
 }
 
