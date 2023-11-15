@@ -45,14 +45,16 @@ const getPlayerSteam64 = async (apiKey: string, username: string) => {
     return undefined; /* you never know */
 }
 
+type Raw = {
+    player: PlayerDBResponse,
+    stats: SteamResponse,
+}
+
 class CSAPI {
 
     username: string;
     steamKey: string;
-    _raw: {
-        player: PlayerDBResponse,
-        stats: SteamResponse,
-    } | {};
+    _raw: Raw;
     data: ParsedData;
     player: PlayerDBResponse | undefined;
     steam: SteamResponse | undefined;
@@ -66,7 +68,7 @@ class CSAPI {
     constructor(username: string, apiKey: string) {
         this.username = username;
         this.steamKey = apiKey;
-        this._raw = {};
+        this._raw = {} as Raw;
         this.data = [] as ParsedData;
     }
 
