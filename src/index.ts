@@ -3,6 +3,7 @@ import { parseItems } from './lib/parseItems';
 /* types */
 import { PlayerDBResponse, PlayerInfo } from './types/player';
 import { SteamResponse } from './types/steam';
+import { GeneralStats, LastMatch, MapStats, UnknownStats, WeaponsStats } from './types/stats';
 
 const STEAM64_REGEX = /^\d{17}$/;
 
@@ -99,7 +100,7 @@ class CSAPI {
      */
     info() {
         const user = this._raw.player?.data?.player?.meta || {};
-        return user as PlayerDBResponse;
+        return user as PlayerInfo;
     }
 
     /**
@@ -112,7 +113,7 @@ class CSAPI {
         for (const stat of stats) {
             data[stat.key] = stat.value;
         }
-        return data;
+        return data as GeneralStats;
     }
 
     /**
@@ -125,7 +126,7 @@ class CSAPI {
         for (const stat of stats) {
             data[stat.key] = stat.value;
         }
-        return data;
+        return data as UnknownStats;
     }
 
     /**
@@ -147,7 +148,7 @@ class CSAPI {
                 wr: (_wins / _played).toFixed(4),
             };
         }
-        return data;
+        return data as MapStats;
     }
 
     /**
@@ -173,7 +174,7 @@ class CSAPI {
                 kills_per_shot: (_kills / _shots).toFixed(4),
             };
         }
-        return data;
+        return data as WeaponsStats;
     }
 
     /**
@@ -186,7 +187,7 @@ class CSAPI {
         for (const stat of stats) {
             data[stat.key] = stat.value;
         }
-        return data;
+        return data as LastMatchStats;
     }
 
     get raw() { return { ...this._raw, data: this.data } }

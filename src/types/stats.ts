@@ -104,7 +104,7 @@ export type WeaponsStats = {
 
 export type UnknownStats = any;
 
-export type LastMatch = {
+export type LastMatchStats = {
     last_match_t_wins: number,
     last_match_ct_wins: number,
     last_match_wins: number,
