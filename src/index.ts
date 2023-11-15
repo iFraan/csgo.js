@@ -1,35 +1,37 @@
-const axios = require('axios');
-const { parseItems } = require('./lib/parseItems');
+import axios from 'axios';
+import { parseItems } from './lib/parseItems';
+/* types */
+import { PlayerDBResponse, PlayerInfo } from './types/player';
 
-const STEAM64_REGEX = /^\d{17}$/
+const STEAM64_REGEX = /^\d{17}$/;
 
 const URLS = {
     stats: 'http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=730&key={APIKEY}&steamid={STEAMID}',
     player: 'https://playerdb.co/api/player/steam/{PLAYER}',
     steam64: 'https://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key={APIKEY}&vanityurl={PLAYER}',
-}
+} as const;
 
-const key = (arr, name) => arr[arr.indexOf(arr.find(x => x.metadata.key == name))].value;
+const key = (arr: any[], name: string) => arr[arr.indexOf(arr.find(x => x.metadata.key == name))].value;
 
-const fetch = (url) => new Promise((resolve, reject) => {
+const fetch = (url: string) => new Promise((resolve, reject) => {
 
     axios.get(url).then(res => {
-        resolve(res.data)
+        resolve(res.data);
     }).catch(err => {
         reject(err.response.data)
     })
 
 })
 
-const getPlayerSteam64 = async (apiKey, username) => {
+const getPlayerSteam64 = async (apiKey: string, username: string) => {
 
     /* if it is already an possible valid id */
     if (STEAM64_REGEX.test(username)) return username;
 
     try {
-        const { response: player } = await fetch(URLS.steam64.replace('{PLAYER}', username).replace('{APIKEY}', apiKey))
+        const { response: player }: any = await fetch(URLS.steam64.replace('{PLAYER}', username).replace('{APIKEY}', apiKey))
         if (player?.success === 1) {
-            return player.steamid;
+            return player.steamid as string;
         }
         /* force an error if no match is found */
         throw new Error(player?.message || `Couldn't find a steam user/id with ${username}`)
@@ -42,13 +44,19 @@ const getPlayerSteam64 = async (apiKey, username) => {
 
 class CSAPI {
 
+    username: string;
+    steamKey: string;
+    _raw: any;
+    data: any;
+    player: PlayerDBResponse | undefined;
+
     /**
      * Use API.fetchUser instead.
      * @param {string} username 
      * @param {string} apiKey 
      * @private // idk if it does something outside of typescript, but there it is
      */
-    constructor(username, apiKey) {
+    constructor(username: string, apiKey: string) {
         this.username = username;
         this.steamKey = apiKey;
         this._raw = {};
@@ -61,17 +69,18 @@ class CSAPI {
      * @param {string} username 
      * @returns API instance
      */
-    static async fetchUser(username, apiKey) {
+    static async fetchUser(username: string, apiKey: string) {
         const API = new CSAPI(username, apiKey);
         if (typeof username == 'undefined') throw new Error('You have to provide an username.');
         if (typeof apiKey == 'undefined') throw new Error('You have to provide a Steam API key. You can get one here: https://steamcommunity.com/dev/apikey');
         try {
             /* test username for id */
-            const steam64 = await getPlayerSteam64(API.steamKey, username);
+            const steam64: string = await getPlayerSteam64(API.steamKey, username);
             /* fetch data */
-            API._raw.player = await fetch(URLS.player.replace('{PLAYER}', steam64))
-            if (!API._raw.player?.success) throw new Error(API._raw.player?.message || `Couldn't find a steam user/id with ${username}`)
+            API.player = await fetch(URLS.player.replace('{PLAYER}', steam64)) as PlayerDBResponse;
+            if (!API.player?.success) throw new Error(API.player?.message || `Couldn't find a steam user/id with ${username}`)
             API._raw.stats = await fetch(URLS.stats.replace('{STEAMID}', API._raw.player.data.player.id).replace('{APIKEY}', API.steamKey))
+            API._raw.player = API.player;
             /* parse data */
             API.data = parseItems(API._raw.stats);
         } catch (e) {
@@ -181,9 +190,4 @@ class CSAPI {
 
 }
 
-
-module.exports = {
-    API: CSAPI,
-    MAPS: require('./constants/maps'),
-    WEAPONS: require('./constants/weapons'),
-}
+export default CSAPI
