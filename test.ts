@@ -1,5 +1,5 @@
 import { API } from './src/index';
-const STEAM_KEY = '';
+const STEAM_KEY = ''; // replace your token
 
 const test = async () => {
   try {

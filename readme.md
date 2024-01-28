@@ -5,7 +5,7 @@
     <a href="https://www.npmjs.com/package/csgo.js"><img src="https://badgen.net/npm/dt/csgo.js?color=blue" alt="NPM-Downloads"/></a>
     <a href="https://github.com/iFraan/csgo.js"><img src="https://badgen.net/github/stars/iFraan/csgo.js?color=yellow" alt="Github Stars"/></a>
     <a href="https://github.com/iFraan/csgo.js/issues"><img src="https://badgen.net/github/issues/iFraan/csgo.js?color=green" alt="Issues"/></a>
-    <h2>A <b>CSGO Stats</b> library that uses the official Steam API.</h2>
+    <h2>A <b>CSGO/CS2 Stats</b> library that uses the official Steam API.</h2>
 </div>
 
 ### Dependencies
@@ -40,14 +40,17 @@ npm i csgo.js
 > For more example usages go into the `docs` folder or click the links in the table above
 
 ```js
+// requires
 const { API } = require('csgo.js');
-const { STEAM_TOKEN } = require('./keys.json');
+// imports
+import { API } from 'csgo.js';
+
+const STEAM_TOKEN = ''; // replace your token
 
 const user = await API.fetchUser('iFraan_', STEAM_TOKEN);
 const { kills, deaths, time_played, damage_done } = user.stats();
 console.log(kills, deaths, time_played, damage_done);
 ```
-
 
 ## Disclaimer
 This project is fully for educational purposes.
