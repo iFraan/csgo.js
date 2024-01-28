@@ -126,7 +126,7 @@ class CSAPI {
      * Get unkonwn stats
      * @returns UnknownStats
      */
-    unknown() {
+    unknown(): UnknownStats {
         const stats = this.data.filter((x) => x.category === 'Unknown');
         const data = {};
         for (const stat of stats) {
@@ -139,7 +139,7 @@ class CSAPI {
      * Get maps stats
      * @returns MapStats
      */
-    maps() {
+    maps(): MapStats {
         const maps = this.data.filter((x) => x.category === 'Maps');
         const wins = maps.filter((x) => x.key.endsWith('_wins')).map((x) => ({ ...x, key: x.key.replace('_wins', '') }));
         const played = maps.filter((x) => x.key.endsWith('_played')).map((x) => ({ ...x, key: x.key.replace('_played', '') }));
@@ -161,7 +161,7 @@ class CSAPI {
      * Get weapons stats
      * @returns WeaponsStats
      */
-    weapons() {
+    weapons(): WeaponsStats {
         const weapons = this.data.filter((x) => x.category === 'Weapons');
         const kills = weapons.filter((x) => x.key.endsWith('_kills')).map((x) => ({ ...x, key: x.key.replace('_kills', '') }));
         const shots = weapons.filter((x) => x.key.endsWith('_shots')).map((x) => ({ ...x, key: x.key.replace('_shots', '') }));
@@ -187,7 +187,7 @@ class CSAPI {
      * Get last match stats
      * @returns LastMatchStats
      */
-    lastMatch() {
+    lastMatch(): LastMatchStats {
         const stats = this.data.filter((x) => x.category === 'LastMatch');
         const data = {};
         for (const stat of stats) {
