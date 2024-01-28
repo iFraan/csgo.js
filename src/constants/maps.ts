@@ -19,5 +19,6 @@ const MAPS = {
     de_cache: 'Cache',
     de_overpass: 'Overpass',
     de_subzero: 'Subzero',
-}
+} as const;
+
 export default MAPS;
