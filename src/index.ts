@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { parseItems } from './lib/parseItems';
+import { parseItems } from './lib/util';
 /* constants */
 import WEAPONS from './constants/weapons';
 import MAPS from './constants/maps';
