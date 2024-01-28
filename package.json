@@ -1,6 +1,6 @@
 {
   "name": "csgo.js",
-  "version": "1.5.4",
+  "version": "1.5.41",
   "description": "CSGO/CS2 stats using the Official Steam API.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
