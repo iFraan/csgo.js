@@ -13,6 +13,8 @@ export type GeneralStats = {
     wins: number,
     damage_done: number,
     money_earned: number,
+    knife_kills: number,
+    hegrenade_kills: number,
     headshot_kills: number,
     enemy_weapon_kills: number,
     pistol_round_wins: number,
