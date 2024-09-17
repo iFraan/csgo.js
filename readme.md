@@ -9,20 +9,23 @@
 </div>
 
 ### Dependencies
+
 ``
 axios
 ``
 
 ### Instalattion
+
 To install use:
+
 ```shell
 npm i csgo.js
 ```
 
 > You'll need a **Steam API Key**, you can get one free [here](https://steamcommunity.com/dev/apikey)
 
-
 ### Available Methods for user
+
 > You must call **API.fetchUser** before using any other method.
 
 | Method      | Description               | More info                         |
@@ -35,8 +38,8 @@ npm i csgo.js
 | unknown()   | Unknown Stats             | [unknown.md](docs/unknown.md)     |
 | raw         | raw data collected so far | [raw.md](docs/raw.md)             |
 
-
 ### Example usage
+
 > For more example usages go into the `docs` folder or click the links in the table above
 
 ```js
@@ -53,4 +56,5 @@ console.log(kills, deaths, time_played, damage_done);
 ```
 
 ## Disclaimer
+
 This project is fully for educational purposes.

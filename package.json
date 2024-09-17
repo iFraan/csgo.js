@@ -1,6 +1,6 @@
 {
   "name": "csgo.js",
-  "version": "1.5.41",
+  "version": "1.5.42",
   "description": "CSGO/CS2 stats using the Official Steam API.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -39,12 +39,12 @@
     "url": "https://github.com/iFraan/csgo.js/issues"
   },
   "homepage": "https://github.com/iFraan/csgo.js#readme",
-  "dependencies": {
-    "axios": "^0.27.2"
-  },
   "devDependencies": {
-    "ts-node": "^10.9.1",
-    "tsup": "^7.2.0",
-    "typescript": "^5.2.2"
+    "ts-node": "^10.9.2",
+    "tsup": "^8.3.0",
+    "typescript": "^5.6.2"
+  },
+  "dependencies": {
+    "axios": "^1.7.7"
   }
 }
